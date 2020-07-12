@@ -31,10 +31,17 @@ public class BookController {
     }
 
 
-    @GetMapping(value = "deleteBook")
+    @GetMapping(value = "/deleteBook")
     public String deleteBook(@RequestParam("id") int id){
         bookRepository.deleteById(id);
         return "redirect:/books";
+    }
+
+    @GetMapping(value="/modifyBook")
+    public String modifyBook(@RequestParam("id") int id, Model model){
+        Book book = bookRepository.getOne(id);
+        model.addAttribute("book", book);
+        return "/modifyBook";
     }
 
 }

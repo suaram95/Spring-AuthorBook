@@ -4,6 +4,7 @@ import com.example.authorbook.model.Author;
 import com.example.authorbook.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,9 +31,10 @@ public class AuthorController {
     }
 
     @GetMapping(value = "/modifyAuthor")
-    public String modifyAuthor(@RequestParam("id") int id){
-        authorRepository.getOne(id);
-        return "redirect:/modifyAuthor";
+    public String modifyAuthor(@RequestParam("id") int id, Model model){
+        Author author = authorRepository.getOne(id);
+        model.addAttribute("author", author);
+        return "/modifyAuthor";
     }
 
 

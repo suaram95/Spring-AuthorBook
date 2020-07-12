@@ -20,7 +20,7 @@
         <th th:text="${book.price}"></th>
         <th th:text="${book.authorId}"></th>
         <th><a th:href="@{/deleteBook(id=${book.id})}">Delete</a></th>
-        <th><a href="/modify">Modify</a></th>
+        <th><a th:href="@{/modifyBook(id=${book.id})}">Modify</a></th>
 
     </tr>
 </table>

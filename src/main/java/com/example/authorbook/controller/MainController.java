@@ -29,14 +29,13 @@ public class MainController {
         return "home";
     }
 
-    @PostMapping("/addAuthor")
+    @PostMapping("/saveAuthor")
     public String addUser(@ModelAttribute Author author) {
         authorRepository.save(author);
-        authorRepository.flush();
         return "redirect:/";
     }
 
-    @PostMapping("/addBook")
+    @PostMapping("/saveBook")
     public String addBook(@ModelAttribute Book book){
         bookRepository.save(book);
         return "redirect:/";

@@ -1,20 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 <h3>Modify Author</h3>
-<form action="/addAuthor" method="post">
-    <input type="text" name="name" placeholder="Please input name" required="required"><br>
-    <input type="text" name="surname" placeholder="Please input surname" required="required"><br>
-    <input type="text" name="email" placeholder="Please input email" required="required"><br>
+<form action="/saveAuthor" method="post">
+    <input type="hidden" name="id" th:value="${author.id}">
+    <input type="text" name="name" placeholder="Please input name" required="required" th:value="${author.name}"><br>
+    <input type="text" name="surname" placeholder="Please input surname" required="required" th:value="${author.surname}"><br>
+    <input type="text" name="email" placeholder="Please input email" required="required" th:value="${author.email}"><br>
     Gender:
-    <input type="radio" name="gender" value="MALE">MALE
-    <input type="radio" name="gender" value="FEMALE">FEMALE<br>
-    <textarea name="bio" placeholder="Tell us about you"></textarea><br>
-    <input type="submit" value="Add Author">
+    <input type="radio" name="gender" th:value="${author.gender.name()}"}>MALE
+    <input type="radio" name="gender" th:value="${author.gender.name()}"}>FEMALE<br>
+    <textarea name="bio" placeholder="Tell us about you" th:value="${author.bio}"></textarea><br>
+    <input type="submit" value="Change">
 </form>
 </body>
 </html>
