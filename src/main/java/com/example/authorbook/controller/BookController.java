@@ -40,7 +40,7 @@ public class BookController {
     @GetMapping(value="/modifyBook")
     public String modifyBook(@RequestParam("id") int id, Model model){
         Book book = bookRepository.getOne(id);
-        model.addAttribute("book", book);
+        model.addAttribute("book", book);//
         return "/modifyBook";
     }
 
