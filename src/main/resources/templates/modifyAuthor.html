@@ -6,7 +6,7 @@
 </head>
 <body>
 <h3>Modify Author</h3>
-<form action="/saveAuthor" method="post">
+<form action="/saveAuthor" method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" th:value="${author.id}">
     <input type="text" name="name" placeholder="Please input name" required="required" th:value="${author.name}"><br>
     <input type="text" name="surname" placeholder="Please input surname" required="required" th:value="${author.surname}"><br>
@@ -14,7 +14,8 @@
     Gender:
     <input type="radio" name="gender" th:value="${author.gender.name()}"}>MALE
     <input type="radio" name="gender" th:value="${author.gender.name()}"}>FEMALE<br>
-    <textarea name="bio" placeholder="Tell us about you" th:value="${author.bio}"></textarea><br>
+    <textarea name="bio" placeholder="Tell us about you" th:value="${author.bio}" th:text="${author.bio}"></textarea><br>
+    <input type="file" name="image" th:value="${author.profilePic}" th:selected="${author.profilePic}"><br>
     <input type="submit" value="Change">
 </form>
 </body>

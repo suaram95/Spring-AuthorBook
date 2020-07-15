@@ -6,8 +6,8 @@
     <title>Home</title>
 </head>
 <body>
-Add User<br>
-<form action="/addAuthor" method="post">
+Add Author<br>
+<form action="/saveAuthor" method="post" enctype="multipart/form-data">
     <input type="text" name="name" placeholder="Please input name" required="required"><br>
     <input type="text" name="surname" placeholder="Please input surname" required="required"><br>
     <input type="text" name="email" placeholder="Please input email" required="required"><br>
@@ -15,6 +15,7 @@ Add User<br>
     <input type="radio" name="gender" value="MALE">MALE
     <input type="radio" name="gender" value="FEMALE">FEMALE<br>
     <textarea name="bio" placeholder="Tell us about you"></textarea><br>
+    <input type="file" name="image"><br>
     <input type="submit" value="Add Author">
 </form>
 <a href="/authors">All Authors</a>

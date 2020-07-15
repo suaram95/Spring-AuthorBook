@@ -31,6 +31,8 @@ public class Author {
     private Gender gender;
     @Column
     private String bio;
+    @Column(name = "profile_pic")
+    private String profilePic;
 
 
 }
