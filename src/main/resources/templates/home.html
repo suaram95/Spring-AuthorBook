@@ -6,6 +6,8 @@
     <title>Home</title>
 </head>
 <body>
+<a href="/login" th:if="${username==null}">Login</a><br>
+<a href="/logout" th:if="${username!=null}">Logout</a><br>
 Add Author<br>
 <form action="/saveAuthor" method="post" enctype="multipart/form-data">
     <input type="text" name="name" placeholder="Please input name" required="required"><br>

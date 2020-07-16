@@ -7,6 +7,7 @@ import com.example.authorbook.repository.BookRepository;
 import com.example.authorbook.service.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -25,7 +27,12 @@ public class MainController {
     private final AuthorService authorService;
 
     @GetMapping(value = "/")
-    public String homePage(ModelMap modelMap) {
+    public String homePage(@AuthenticationPrincipal Principal principal, ModelMap modelMap) {
+        String username=null;
+        if (principal!=null){
+            username=principal.getName();
+        }
+        modelMap.addAttribute("username", username);
         modelMap.addAttribute("authors", authorService.findAll());
         return "home";
     }
