@@ -37,5 +37,12 @@ public class MainController {
         return "home";
     }
 
+    @GetMapping("/loginPage")
+    public String loginpage(){
+        return "loginPage";
+    }
+
+
+
 
 }

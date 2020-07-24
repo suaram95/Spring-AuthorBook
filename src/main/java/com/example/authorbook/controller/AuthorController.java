@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -29,6 +30,7 @@ public class AuthorController {
     @Value("${file.upload.dir}")
     private String uploadDir;
     private final AuthorService authorService;
+    private final PasswordEncoder passwordEncoder;
 
 
     @GetMapping(value = "/authors")
@@ -39,10 +41,12 @@ public class AuthorController {
 
     @PostMapping("/saveAuthor")
     public String addUser(@ModelAttribute Author author, @RequestParam("image") MultipartFile file) throws IOException {
+
         String name=System.currentTimeMillis()+"_"+file.getOriginalFilename();
         File image=new File(uploadDir,name);
         file.transferTo(image);
         author.setProfilePic(name);
+        author.setPassword(passwordEncoder.encode(author.getPassword()));
         authorService.saveAuthor(author);
         return "redirect:/";
     }

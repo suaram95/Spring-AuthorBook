@@ -2,10 +2,8 @@ package com.example.authorbook.controller;
 
 
 import com.example.authorbook.model.Book;
-import com.example.authorbook.repository.AuthorRepository;
 import com.example.authorbook.service.BookService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;

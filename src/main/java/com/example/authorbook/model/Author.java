@@ -25,6 +25,12 @@ public class Author {
     @Column
     private String surname;
     @Column
+    private String username;
+    @Column
+    private String password;
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
+    @Column
     private String email;
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "enum('MALE','FEMALE')")
