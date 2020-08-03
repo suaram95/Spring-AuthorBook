@@ -3,6 +3,7 @@ package com.example.authorbook.controller;
 import com.example.authorbook.model.Author;
 import com.example.authorbook.repository.AuthorRepository;
 import com.example.authorbook.service.AuthorService;
+import com.example.authorbook.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
@@ -31,24 +34,52 @@ public class AuthorController {
     private String uploadDir;
     private final AuthorService authorService;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
 
     @GetMapping(value = "/authors")
     public String allAuthors(ModelMap modelMap) {
-        modelMap.addAttribute("authors",  authorService.findAll());
+        modelMap.addAttribute("authors", authorService.findAll());
         return "authors";
     }
 
     @PostMapping("/saveAuthor")
-    public String addUser(@ModelAttribute Author author, @RequestParam("image") MultipartFile file) throws IOException {
-
-        String name=System.currentTimeMillis()+"_"+file.getOriginalFilename();
-        File image=new File(uploadDir,name);
+    public String addUser(ModelMap map, @ModelAttribute Author author, @RequestParam("image") MultipartFile file, @RequestParam(name = "msg", required = false) String msg) throws IOException {
+        if (!author.getPassword().equals(author.getConfirmPassword())) {
+            return "redirect:/?msg=Password and Confirm password does not match!";
+        }
+        Optional<Author> byUsername = authorService.findByUsername(author.getUsername());
+        if (byUsername.isPresent()) {
+            return "redirect:/?msg=User already exists";
+        }
+        String name = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+        File image = new File(uploadDir, name);
         file.transferTo(image);
         author.setProfilePic(name);
         author.setPassword(passwordEncoder.encode(author.getPassword()));
+        author.setActive(false);
+        author.setToken(UUID.randomUUID().toString());
         authorService.saveAuthor(author);
+        String link = "http://localhost:8080/activate=?email=" + author.getUsername() + "&token=" + author.getToken();
+        emailService.send(author.getUsername(),
+                "Welcome", "Dear " + author.getName() +
+                        " You have successfully registered.Please activate your account by clicking on " + link);
         return "redirect:/";
+    }
+
+    @GetMapping("/activate")
+    public String activate(@RequestParam("email") String email, @RequestParam("token") String token) {
+        Optional<Author> byUsername = authorService.findByUsername(email);
+        if (byUsername.isPresent()) {
+            Author author = byUsername.get();
+            if (author.getToken().equals(token)) {
+                author.setActive(true);
+                author.setToken("");
+                authorService.saveAuthor(author);
+                return "redirect:/?msg=User was activated, please login!";
+            }
+        }
+        return "redirect:/?msg=Something went wrong. Please try again";
     }
 
     @GetMapping(value = "/deleteAuthor")

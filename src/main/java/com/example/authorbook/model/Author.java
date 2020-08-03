@@ -28,10 +28,10 @@ public class Author {
     private String username;
     @Column
     private String password;
+    @Transient
+    private String confirmPassword;
     @Enumerated(value = EnumType.STRING)
     private Role role;
-    @Column
-    private String email;
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "enum('MALE','FEMALE')")
     private Gender gender;
@@ -39,6 +39,12 @@ public class Author {
     private String bio;
     @Column(name = "profile_pic")
     private String profilePic;
+    @Column
+    private boolean active;
+    @Column
+    private String token;
+
+
 
 
 }

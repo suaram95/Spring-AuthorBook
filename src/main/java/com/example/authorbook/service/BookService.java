@@ -5,6 +5,8 @@ import com.example.authorbook.model.Book;
 import com.example.authorbook.repository.AuthorRepository;
 import com.example.authorbook.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,21 +17,24 @@ public class BookService {
 
     private final BookRepository bookRepository;
 
-
     public List<Book> findAll() {
         return bookRepository.findAll();
     }
 
-    public void saveBook(Book book){
+    public void saveBook(Book book) {
         bookRepository.save(book);
     }
 
-    public void deleteById(int id){
+    public void deleteById(int id) {
         bookRepository.deleteById(id);
     }
 
-    public Book getBook(int id){
+    public Book getBook(int id) {
         return bookRepository.getOne(id);
+    }
+
+    public Page<Book> findAll(PageRequest pageRequest) {
+        return bookRepository.findAll(pageRequest);
     }
 
 }

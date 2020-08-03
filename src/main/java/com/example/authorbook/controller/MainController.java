@@ -28,11 +28,6 @@ public class MainController {
 
     @GetMapping(value = "/")
     public String homePage(@AuthenticationPrincipal Principal principal, ModelMap modelMap) {
-        String username=null;
-        if (principal!=null){
-            username=principal.getName();
-        }
-        modelMap.addAttribute("username", username);
         modelMap.addAttribute("authors", authorService.findAll());
         return "home";
     }

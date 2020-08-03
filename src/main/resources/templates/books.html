@@ -5,7 +5,8 @@
     <title>Book</title>
 </head>
 <body>
-<a href="/">Go to home page</a>
+<header th:insert="fragments/general.html::header"></header>
+<a href="/">Go to home page</a><br>
 <h2>Books</h2>
 <table border="1px solid black">
     <tr>
@@ -21,9 +22,13 @@
         <th th:text="${book.authorId}"></th>
         <th><a th:href="@{/deleteBook(id=${book.id})}">Delete</a></th>
         <th><a th:href="@{/modifyBook(id=${book.id})}">Modify</a></th>
-
     </tr>
 </table>
-
+<div th:if="${books.totalPages>0}" class="pagination"
+     th:each="pageNumber:${pageNumbers}">
+    <a th:href="@{/(size=${books.size}, page=${pageNumber})}"
+       th:text="${pageNumber}"
+       th:class="${pageNumber==books.number+1}? active"></a>
+</div>
 </body>
 </html>
