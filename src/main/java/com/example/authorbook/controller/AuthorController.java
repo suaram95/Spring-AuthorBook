@@ -36,7 +36,7 @@ public class AuthorController {
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
 
-
+    //getMappingAuthors
     @GetMapping(value = "/authors")
     public String allAuthors(ModelMap modelMap) {
         modelMap.addAttribute("authors", authorService.findAll());
