@@ -43,6 +43,7 @@ public class AuthorController {
         return "authors";
     }
 
+    //postMappingSaveAuthor
     @PostMapping("/saveAuthor")
     public String addUser(ModelMap map, @ModelAttribute Author author, @RequestParam("image") MultipartFile file, @RequestParam(name = "msg", required = false) String msg) throws IOException {
         if (!author.getPassword().equals(author.getConfirmPassword())) {
