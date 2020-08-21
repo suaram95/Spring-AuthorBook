@@ -23,11 +23,12 @@
         <th th:text="${author.username}"></th>
         <th th:text="${author.gender}"></th>
         <th th:text="${author.bio}"></th>
-        <th><img th:src="@{/image(name=${author.profilePic})}" width="20" /></th>
+        <th><img th:src="@{/image(name=${author.profilePic})}" width="20"/></th>
         <th><a th:href="@{/deleteAuthor(id=${author.id})}">Delete</a></th>
         <th><a th:href="@{/modifyAuthor(id=${author.id})}">Modify</a></th>
     </tr>
 </table>
-    <p>new p</p>
+<div class="newDiv"></div>
+<p>new p</p>
 </body>
 </html>
